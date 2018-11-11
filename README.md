@@ -2,6 +2,10 @@
 
 > View difference between git branches
 
+<p align="center">
+<img alt="demo" width="850" src="https://github.com/hankchanocd/git-stack/blob/master/images/demo.png" />
+</p>
+
 `git stack`.
 
 ## Install
