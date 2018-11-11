@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+#!/usr/bin/env zsh
+#
+# Show the difference between the selected branch and master branch
+
+function stack() {
+	# Check if it's a git repo
+	[[ $(git root 2>&1) == 'Not a git repo!' ]] && echo "Not a git repo!" && exit 1
+
+	branch=''
+	# Select a branch if no 'develop' branch
+	if [[ -z $(git branch --list | grep 'develop') ]]; then
+		branch=$(git branch --list |
+			grep --invert-match 'master' | # Remove master from options
+			fzf --reverse --height=40% --cycle |
+			tr "*" " " |
+			xargs) # Remove trailing whitespaces
+	else
+		branch='develop'
+	fi
+
+	# Check if $branch has value
+	[[ -z "$branch" ]] && echo "No branch selected" && exit 1
+
+	function fuzzy-commit() {
+		function glNoGraph() {
+			git log master.."$branch" --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" "$@"
+		}
+		_gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
+		_viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'"
+
+		glNoGraph |
+			fzf --cycle --no-sort --reverse --tiebreak=index --no-multi \
+				--ansi --preview="$_viewGitLogLine" \
+				--header "enter to view, alt-y to copy hash" \
+				--bind "enter:execute:$_viewGitLogLine   | less -R" \
+				--bind "alt-y:execute:$_gitLogLineToHash | xclip"
+	}
+
+	fuzzy-commit
+}
+
+stack
