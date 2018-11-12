@@ -28,6 +28,10 @@ $ git stack
 
 **2018-Nov-11:** `v1` published. Automate commit and file transfer process with [`commitizen`](http://commitizen.github.io/cz-cli/) and [`ghooks`](https://github.com/ghooks-org/ghooks).
 
+## Others
+
+See [Dotfiles](https://gitlab.com/hankchanocd/dotfiles) for my other works on `git`.
+
 ## License
 
 [MIT](./LICENSE)
