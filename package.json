@@ -10,21 +10,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hankchanocd/git-overview.git"
+    "url": "git+https://github.com/hankchanocd/git-stack.git"
   },
   "keywords": [
     "git",
     "branch",
     "fuzzy",
+    "fzf",
     "differences",
     "git-stack"
   ],
   "author": "Hank Chan <hankchanth@icloud.com> (https://github.com/hankchanocd)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hankchanocd/git-overview/issues"
+    "url": "https://github.com/hankchanocd/git-stack/issues"
   },
-  "homepage": "https://github.com/hankchanocd/git-overview#readme",
+  "homepage": "https://github.com/hankchanocd/git-stack#readme",
   "devDependencies": {
     "commitizen": "^3.0.4",
     "cz-conventional-changelog": "^2.1.0",
