@@ -14,21 +14,34 @@ Clone the repo, and run `npm run transfer` to transfer `./git-stack` to `~/bin`,
 
 If you have a more desired `PATH` for storing scripts, configure `./script/transfer.sh` directly or ignore the transfer instructions.
 
-## Before-Use
+## Requirements
 
 Make sure [`fzf`](https://github.com/junegunn/fzf) is installed globally. `git stack` won't work if `fzf` is not installed.
 
 ## Usage
 
+```
+git-stack [<options>]
+
+Compare against master branch with fzf
+
+where:
+	-h  show this help text
+	-f  fuzzy select a branch to compare with
+```
+
+A simple one-liner is all you need.
 ```bash
 $ git stack
 ```
 
-`develop` is set as the default branch to compare against `master`. If no `develop` branch is detected, `git stack` will ask for input from a fuzzy list of all available branches.
+`git stack` compares the current branch against `master`. `git stack -f`, however, will ask for input from a fuzzy list of all available branches, to be compared against `master`.
 
 ## Changelog
 
 **2018-Nov-11:** `v1` published. Automate commit and file transfer process with [`commitizen`](http://commitizen.github.io/cz-cli/) and [`ghooks`](https://github.com/ghooks-org/ghooks).
+
+**2018-Nov-13:** `-f` created for fuzzy selecting branch to compare with `master`.
 
 ## Others
 

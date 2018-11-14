@@ -7,24 +7,13 @@ function main() {
 	# Check if it's a git repo
 	[[ $(git root 2>&1) == 'Not a git repo!' ]] && echo "Not a git repo!" && exit 1
 
+	# Assign master to $branch if not defined yet
 	local branch
-	# Select a branch if no 'develop' branch
-	if [[ -z $(git branch --list | grep 'develop') ]]; then
-		branch=$(git branch --list |
-			grep --invert-match 'master' | # Remove master from options
-			fzf --reverse --height=40% --cycle |
-			tr "*" " " |
-			xargs) # Remove trailing whitespaces
-	else
-		branch='develop'
-	fi
+	[[ -z "$1" ]] && branch='master' || branch=$1
 
-	# Check if $branch has value
-	[[ -z "$branch" ]] && echo "No branch selected" && exit 1
-
-	function fuzzy-commit() {
+	function git-stack() {
 		glNoGraph() {
-			git log master.."$branch" --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" "$@"
+			git log .."$branch" --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" "$@"
 		}
 		_gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
 		_viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'"
@@ -37,9 +26,23 @@ function main() {
 				--bind "alt-y:execute:$_gitLogLineToHash | xclip"
 	}
 
-	fuzzy-commit
+	git-stack
 }
 
+function fuzzy_select_branch() {
+	# Check if it's a git repo
+	[[ $(git root 2>&1) == 'Not a git repo!' ]] && echo "Not a git repo!" && exit 1
+
+	result=$(git branch --list |
+		fzf --reverse --height=40% --cycle
+	)
+	branch=$(echo "$result" |
+		tr "*" " " |
+		xargs # Remove trailing whitespaces
+	)
+
+	[[ -n "$branch" ]] && main $branch
+}
 
 ################ Help ################
 usage="usage: $(basename "$0") [<options>]
@@ -47,14 +50,19 @@ usage="usage: $(basename "$0") [<options>]
 Compare against master branch with fzf
 
 where:
-	-h  show this help text"
+	-h  show this help text
+	-f  fuzzy select a branch to compare with"
 
 ############# Parse options ##############
-while getopts ':h' option; do
+while getopts ':hf' option; do
 	case "$option" in
 	h)
 		echo "$usage"
 		exit 0
+		;;
+	f)
+		fuzzy_select_branch
+		exit
 		;;
 	:)
 		main
