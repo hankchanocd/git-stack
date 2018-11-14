@@ -34,6 +34,10 @@ $ git stack
 
 See [Dotfiles](https://gitlab.com/hankchanocd/dotfiles) for my other works on `git`.
 
+See [git-overview](https://github.com/hankchanocd/git-overview) - View differences between git branches with fzf.
+
+See [git-commands](https://github.com/hankchanocd/git-commands) - Fuzzy search git commands with help.
+
 ## License
 
 [MIT](./LICENSE)
