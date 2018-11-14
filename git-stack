@@ -3,11 +3,11 @@
 #
 # Show the difference between the selected branch and master branch
 
-function stack() {
+function main() {
 	# Check if it's a git repo
 	[[ $(git root 2>&1) == 'Not a git repo!' ]] && echo "Not a git repo!" && exit 1
 
-	branch=''
+	local branch
 	# Select a branch if no 'develop' branch
 	if [[ -z $(git branch --list | grep 'develop') ]]; then
 		branch=$(git branch --list |
@@ -23,7 +23,7 @@ function stack() {
 	[[ -z "$branch" ]] && echo "No branch selected" && exit 1
 
 	function fuzzy-commit() {
-		function glNoGraph() {
+		glNoGraph() {
 			git log master.."$branch" --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" "$@"
 		}
 		_gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
@@ -40,4 +40,34 @@ function stack() {
 	fuzzy-commit
 }
 
-stack
+
+################ Help ################
+usage="usage: $(basename "$0") [<options>]
+
+Compare against master branch with fzf
+
+where:
+	-h  show this help text"
+
+############# Parse options ##############
+while getopts ':h' option; do
+	case "$option" in
+	h)
+		echo "$usage"
+		exit 0
+		;;
+	:)
+		main
+		exit
+		;;
+	\?)
+		printf "illegal option: -%s\n" "$OPTARG" >&2
+		echo -e "$usage" >&2
+		exit 1
+		;;
+	esac
+done
+shift $((OPTIND - 1))
+
+# Default case when no option provided
+main

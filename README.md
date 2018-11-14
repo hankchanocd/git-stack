@@ -1,6 +1,6 @@
 # git-stack &nbsp;&nbsp; ![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/hankchanocd/git-stack.svg) [![Build Status](https://travis-ci.org/hankchanocd/git-stack.svg?branch=master)](https://travis-ci.org/hankchanocd/git-stack) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![Github issues](https://img.shields.io/github/issues/hankchanocd/git-stack.svg)](https://github.com/hankchanocd/git-stack/issues) [![CodeFactor](https://www.codefactor.io/repository/github/hankchanocd/git-stack/badge)](https://www.codefactor.io/repository/github/hankchanocd/git-stack)
 
-> View differences between git branches with fzf
+> Compare against master branch with fzf
 
 <p align="center">
 <img alt="demo" width="850" src="https://github.com/hankchanocd/git-stack/blob/master/images/demo.png" />
@@ -34,9 +34,9 @@ $ git stack
 
 See [Dotfiles](https://gitlab.com/hankchanocd/dotfiles) for my other works on `git`.
 
-See [git-overview](https://github.com/hankchanocd/git-overview) - View differences between git branches with fzf.
+See [git-overview](https://github.com/hankchanocd/git-overview) - A quick git repository insight at terminal.
 
-See [git-commands](https://github.com/hankchanocd/git-commands) - Fuzzy search git commands with help.
+See [git-commands](https://github.com/hankchanocd/git-commands) - Fuzzy search git commands with fzf.
 
 ## License
 
