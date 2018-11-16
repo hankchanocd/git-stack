@@ -3,6 +3,12 @@
 #
 # Show the difference between the selected branch and master branch
 
+# Color scheme used exclusively in git-fuzzy-commit
+export FZF_DEFAULT_OPTS='
+  --color hl:33,fg+:214,hl+:33
+  --color spinner:208,pointer:196,marker:208
+'
+
 function main() {
 	# Check if it's a git repo
 	[[ $(git root 2>&1) == 'Not a git repo!' ]] && echo "Not a git repo!" && exit 1
